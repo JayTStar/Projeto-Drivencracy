@@ -1,4 +1,5 @@
 import dados from "../db.js";
+import dayjs from "dayjs"
 
 export async function postChoice(req,res){
     const {title, pollId} = res.locals.choice;
@@ -19,8 +20,10 @@ export async function postChoice(req,res){
 export async function postVote(req,res){
     const {idChoice, idPoll} = res.locals.vote;
 
+    const data = dayjs().format('YYYY-MM-DD HH:mm');
+
     try{
-        await dados.collection("votes").insertOne({idChoice: idChoice, idPoll:idPoll});
+        await dados.collection("votes").insertOne({idChoice: idChoice, idPoll:idPoll, date: data});
 
         console.log("Vote cadastrado com sucesso");
 
